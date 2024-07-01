@@ -3,6 +3,15 @@ import 'package:another_flushbar/flushbar_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+void fieldFocusChange(
+  BuildContext context,
+  FocusNode current,
+  FocusNode nextFocus,
+) {
+  current.unfocus();
+  FocusScope.of(context).requestFocus(nextFocus);
+}
+
 toastMessage(String message) {
   Fluttertoast.showToast(
       msg: message,
