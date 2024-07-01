@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mvvm/res/compenents/round_button.dart';
 // ignore: unused_import
 import 'package:flutter_mvvm/utils/routes/routes_name.dart';
+import 'package:flutter_mvvm/view_model/auth_view_model.dart';
+import 'package:provider/provider.dart';
 import '../utils/utils.dart';
 
 class LoginView extends StatefulWidget {
@@ -18,7 +20,7 @@ class _LoginViewState extends State<LoginView> {
   FocusNode emailFocus = FocusNode();
   FocusNode passFocus = FocusNode();
 
-  ValueNotifier<bool> _obscureText = ValueNotifier<bool>(true);
+  final ValueNotifier<bool> _obscureText = ValueNotifier<bool>(true);
   @override
   void dispose() {
     super.dispose();
@@ -50,14 +52,18 @@ class _LoginViewState extends State<LoginView> {
                 keyboardType: TextInputType.emailAddress,
                 focusNode: emailFocus,
                 onFieldSubmitted: (value) {
-                  fieldFocusChange(context, emailFocus, passFocus);
+                  Utils.fieldFocusChange(context, emailFocus, passFocus);
                 },
                 decoration: const InputDecoration(
-                    hintText: 'Enter Email',
-                    label: Text('Email'),
-                    prefixIcon: Icon(Icons.email_outlined),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(30)))),
+                  hintText: 'Enter Email',
+                  label: Text('Email'),
+                  prefixIcon: Icon(Icons.email_outlined),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(30),
+                    ),
+                  ),
+                ),
               ),
               const SizedBox(
                 height: 15,
@@ -71,22 +77,25 @@ class _LoginViewState extends State<LoginView> {
                     obscureText: _obscureText.value,
                     obscuringCharacter: '*',
                     decoration: InputDecoration(
-                        hintText: 'Enter Password',
-                        label: const Text('Password'),
-                        prefixIcon: const Icon(Icons.lock_outline),
-                        suffixIcon: GestureDetector(
-                          onTap: () {
-                            _obscureText.value = !_obscureText.value;
-                          },
-                          child: Icon(
-                            _obscureText.value
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                          ),
+                      hintText: 'Enter Password',
+                      label: const Text('Password'),
+                      prefixIcon: const Icon(Icons.lock_outline),
+                      suffixIcon: GestureDetector(
+                        onTap: () {
+                          _obscureText.value = !_obscureText.value;
+                        },
+                        child: Icon(
+                          _obscureText.value
+                              ? Icons.visibility_off
+                              : Icons.visibility,
                         ),
-                        border: const OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(30)))),
+                      ),
+                      border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(30),
+                        ),
+                      ),
+                    ),
                   );
                 },
               ),
@@ -119,9 +128,31 @@ class _LoginViewState extends State<LoginView> {
               //     ),
               //   ),
               // )
-              RoundButton(
-                title: 'Login',
-                onPress: () {},
+              Consumer<AuthViewModel>(
+                builder: (context, value, child) {
+                  return RoundButton(
+                    title: 'Login',
+                    onPress: () {
+                      if (emailController.text.toString().isEmpty) {
+                        Utils.flushErrorMessage(
+                            'Email field cannot be empty', context);
+                      } else if (passController.text.toString().isEmpty) {
+                        Utils.flushErrorMessage(
+                            'Password field cannot be Empty', context);
+                      } else if (passController.text.toString().length < 6) {
+                        Utils.flushErrorMessage(
+                            'Password cannot be less then 6 digit', context);
+                      } else {
+                        Map data = {
+                          'email': emailController.text.toString(),
+                          'password': passController.text.toString()
+                        };
+                        value.loginApi(data, context);
+                        debugPrint('Api Hit');
+                      }
+                    },
+                  );
+                },
               )
             ],
           ),
