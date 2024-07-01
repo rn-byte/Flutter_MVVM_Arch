@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mvvm/res/compenents/round_button.dart';
 // ignore: unused_import
 import 'package:flutter_mvvm/utils/routes/routes_name.dart';
 import '../utils/utils.dart';
@@ -18,6 +19,16 @@ class _LoginViewState extends State<LoginView> {
   FocusNode passFocus = FocusNode();
 
   ValueNotifier<bool> _obscureText = ValueNotifier<bool>(true);
+  @override
+  void dispose() {
+    super.dispose();
+    emailController.dispose();
+    passController.dispose();
+    emailFocus.dispose();
+    passFocus.dispose();
+    _obscureText.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height * 1;
@@ -82,31 +93,35 @@ class _LoginViewState extends State<LoginView> {
               SizedBox(
                 height: height * 0.1,
               ),
-              SizedBox(
-                width: 250,
-                height: 50,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                      backgroundColor:
-                          WidgetStatePropertyAll(Colors.blue[300])),
-                  onPressed: () {
-                    //print(value.emailController.toString());
-                  },
-                  child:
-                      //value.loading
-                      //  ? const CircularProgressIndicator(
-                      //     color: Colors.white,
-                      //    )
-                      //:
-                      const Text(
-                    'Login',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
+              // SizedBox(
+              //   width: 250,
+              //   height: 50,
+              //   child: ElevatedButton(
+              //     style: ButtonStyle(
+              //         backgroundColor:
+              //             WidgetStatePropertyAll(Colors.blue[300])),
+              //     onPressed: () {
+              //       //print(value.emailController.toString());
+              //     },
+              //     child:
+              //         //value.loading
+              //         //  ? const CircularProgressIndicator(
+              //         //     color: Colors.white,
+              //         //    )
+              //         //:
+              //         const Text(
+              //       'Login',
+              //       style: TextStyle(
+              //         color: Colors.black,
+              //         fontSize: 18,
+              //         fontWeight: FontWeight.bold,
+              //       ),
+              //     ),
+              //   ),
+              // )
+              RoundButton(
+                title: 'Login',
+                onPress: () {},
               )
             ],
           ),
