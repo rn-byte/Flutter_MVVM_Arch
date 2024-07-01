@@ -14,7 +14,7 @@ class AppException implements Exception {
 
 class FetchDataException extends AppException {
   FetchDataException([String? message])
-      : super(message, 'Error during communication');
+      : super(message, ' Error during communication');
 }
 
 class BadRequestException extends AppException {

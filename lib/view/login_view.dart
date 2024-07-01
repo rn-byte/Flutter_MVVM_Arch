@@ -132,6 +132,7 @@ class _LoginViewState extends State<LoginView> {
                 builder: (context, value, child) {
                   return RoundButton(
                     title: 'Login',
+                    loading: value.isLoading,
                     onPress: () {
                       if (emailController.text.toString().isEmpty) {
                         Utils.flushErrorMessage(

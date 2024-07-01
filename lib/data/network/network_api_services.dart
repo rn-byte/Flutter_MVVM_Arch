@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter_mvvm/data/app_exception.dart';
 import 'package:flutter_mvvm/data/network/base_api_services.dart';
+import 'package:flutter_mvvm/utils/utils.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
@@ -43,6 +44,9 @@ dynamic returnResponse(http.Response response) {
   switch (response.statusCode) {
     case 200:
       dynamic responseJson = jsonDecode(response.body);
+      Utils.toastMessage('Login Successfull');
+      // Utils.flushErrorMessage('Login Successfull', context);
+      //print('login successful');
       return responseJson;
     case 400:
       return BadRequestException(response.body.toString());
