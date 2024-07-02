@@ -44,9 +44,7 @@ dynamic returnResponse(http.Response response) {
   switch (response.statusCode) {
     case 200:
       dynamic responseJson = jsonDecode(response.body);
-      Utils.toastMessage('Login Successfull');
-      // Utils.flushErrorMessage('Login Successfull', context);
-      //print('login successful');
+
       return responseJson;
     case 400:
       return BadRequestException(response.body.toString());

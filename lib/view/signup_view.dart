@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mvvm/res/colors.dart';
-import 'package:flutter_mvvm/res/compenents/round_button.dart';
-// ignore: unused_import
-import 'package:flutter_mvvm/utils/routes/routes_name.dart';
-import 'package:flutter_mvvm/view_model/auth_view_model.dart';
 import 'package:provider/provider.dart';
-import '../utils/utils.dart';
 
-class LoginView extends StatefulWidget {
-  const LoginView({super.key});
+import '../res/colors.dart';
+import '../res/compenents/round_button.dart';
+import '../utils/routes/routes_name.dart';
+import '../utils/utils.dart';
+import '../view_model/auth_view_model.dart';
+
+class SignupView extends StatefulWidget {
+  const SignupView({super.key});
 
   @override
-  State<LoginView> createState() => _LoginViewState();
+  State<SignupView> createState() => _SignupViewState();
 }
 
-class _LoginViewState extends State<LoginView> {
+class _SignupViewState extends State<SignupView> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
 
@@ -38,7 +38,7 @@ class _LoginViewState extends State<LoginView> {
     final width = MediaQuery.of(context).size.width * 1;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login'),
+        title: const Text('SignUp'),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -103,36 +103,10 @@ class _LoginViewState extends State<LoginView> {
               SizedBox(
                 height: height * 0.1,
               ),
-              // SizedBox(
-              //   width: 250,
-              //   height: 50,
-              //   child: ElevatedButton(
-              //     style: ButtonStyle(
-              //         backgroundColor:
-              //             WidgetStatePropertyAll(Colors.blue[300])),
-              //     onPressed: () {
-              //       //print(value.emailController.toString());
-              //     },
-              //     child:
-              //         //value.loading
-              //         //  ? const CircularProgressIndicator(
-              //         //     color: Colors.white,
-              //         //    )
-              //         //:
-              //         const Text(
-              //       'Login',
-              //       style: TextStyle(
-              //         color: Colors.black,
-              //         fontSize: 18,
-              //         fontWeight: FontWeight.bold,
-              //       ),
-              //     ),
-              //   ),
-              // )
               Consumer<AuthViewModel>(
                 builder: (context, value, child) {
                   return RoundButton(
-                    title: 'Login',
+                    title: 'Sign Up',
                     loading: value.isLoading,
                     onPress: () {
                       if (emailController.text.toString().isEmpty) {
@@ -149,7 +123,7 @@ class _LoginViewState extends State<LoginView> {
                           'email': emailController.text.toString(),
                           'password': passController.text.toString()
                         };
-                        value.loginApi(data, context);
+                        value.signupApi(data, context);
                         debugPrint('Api Hit');
                       }
                     },
@@ -162,14 +136,13 @@ class _LoginViewState extends State<LoginView> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text('Don\'t have an Account? '),
+                  const Text('Already have an Account? '),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushReplacementNamed(
-                          context, RoutesName.signup);
+                      Navigator.pushReplacementNamed(context, RoutesName.login);
                     },
                     child: const Text(
-                      'Signup ',
+                      'Login ',
                       style: TextStyle(color: AppColor.buttonColor),
                     ),
                   ),
