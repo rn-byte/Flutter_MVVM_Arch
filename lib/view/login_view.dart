@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_mvvm/res/colors.dart';
 import 'package:flutter_mvvm/res/compenents/round_button.dart';
@@ -6,6 +8,7 @@ import 'package:flutter_mvvm/utils/routes/routes_name.dart';
 import 'package:flutter_mvvm/view_model/auth_view_model.dart';
 import 'package:provider/provider.dart';
 import '../utils/utils.dart';
+import '../view_model/user_view_model.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -36,6 +39,7 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height * 1;
     final width = MediaQuery.of(context).size.width * 1;
+    final UserVal = Provider.of<UserViewModel>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Login'),
@@ -150,6 +154,7 @@ class _LoginViewState extends State<LoginView> {
                           'password': passController.text.toString()
                         };
                         value.loginApi(data, context);
+                        UserVal.saveUser;
                         debugPrint('Api Hit');
                       }
                     },

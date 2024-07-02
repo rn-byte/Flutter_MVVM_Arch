@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_mvvm/repository/auth_repository.dart';
 import 'package:flutter_mvvm/utils/routes/routes_name.dart';
@@ -21,6 +19,7 @@ class AuthViewModel with ChangeNotifier {
       setLoading(false);
       debugPrint("Value: ${value['token']}");
       if (value['token'] != '') {
+        //UserViewModel.sa
         //Utils.flushErrorMessage('Login Successfull', context);
         Utils.toastMessage('Login Successfull');
         Navigator.pushReplacementNamed(context, RoutesName.home);
@@ -38,7 +37,7 @@ class AuthViewModel with ChangeNotifier {
     setLoading(true);
     _myRepo.registerApi(data).then((value) {
       setLoading(false);
-      debugPrint("Value: ${value['token']}");
+      debugPrint("Value: $value");
       if (value['token'] != '') {
         Utils.toastMessage('Register Successfull');
         Navigator.pushReplacementNamed(context, RoutesName.login);
