@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mvvm/repository/auth_repository.dart';
 import 'package:flutter_mvvm/utils/routes/routes_name.dart';
 import 'package:flutter_mvvm/utils/utils.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthViewModel with ChangeNotifier {
   final _myRepo = AuthRepository();
@@ -15,14 +16,16 @@ class AuthViewModel with ChangeNotifier {
 
   Future<void> loginApi(dynamic data, BuildContext context) async {
     setLoading(true);
-    _myRepo.loginApi(data).then((value) {
+    _myRepo.loginApi(data).then((value) async {
       setLoading(false);
       debugPrint("Value: ${value['token']}");
       if (value['token'] != '') {
-        //UserViewModel.sa
-        //Utils.flushErrorMessage('Login Successfull', context);
+        SharedPreferences sp = await SharedPreferences.getInstance();
+        sp.setString('token', value['token']);
+
         Utils.toastMessage('Login Successfull');
         Navigator.pushReplacementNamed(context, RoutesName.home);
+        notifyListeners();
       } else {
         Utils.flushErrorMessage('Email or Password is incorrect', context);
       }

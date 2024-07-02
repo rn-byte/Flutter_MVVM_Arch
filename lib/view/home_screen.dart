@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_mvvm/utils/routes/routes_name.dart';
+import 'package:flutter_mvvm/view_model/auth_view_model.dart';
 import 'package:flutter_mvvm/view_model/user_view_model.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,6 +15,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  String? token;
+  Future<void> getData() async {
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    token = sp.getString('token');
+    print('HOME TOKEN: $token');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,6 +48,23 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
         ],
+      ),
+      body: Center(
+        child: Consumer<UserViewModel>(
+          builder: (context, value, child) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('TOKEN: $token'),
+                const SizedBox(
+                  height: 40,
+                ),
+                ElevatedButton(
+                    onPressed: getData, child: const Text('Get Token'))
+              ],
+            );
+          },
+        ),
       ),
     );
   }

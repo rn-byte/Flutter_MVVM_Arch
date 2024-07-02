@@ -154,7 +154,6 @@ class _LoginViewState extends State<LoginView> {
                           'password': passController.text.toString()
                         };
                         value.loginApi(data, context);
-                        UserVal.saveUser;
                         debugPrint('Api Hit');
                       }
                     },
