@@ -4,7 +4,6 @@ import 'package:flutter_mvvm/utils/utils.dart';
 import 'package:flutter_mvvm/view_model/homeview_view_model.dart';
 import 'package:flutter_mvvm/view_model/user_view_model.dart';
 import 'package:provider/provider.dart';
-
 import '../data/response/status.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -90,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Text(Utils.averageRating(
                                 value.moviesList.data!.movies![index].ratings!)
                             .toStringAsFixed(1)),
-                        Icon(
+                        const Icon(
                           Icons.star,
                           color: Colors.yellow,
                         ),
