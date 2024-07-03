@@ -19,12 +19,10 @@ class _SplashViewState extends State<SplashView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: Text(
-            'Splash Screen',
-            style: Theme.of(context).textTheme.headlineLarge,
-          ),
+      body: Center(
+        child: Text(
+          'Splash Screen',
+          style: Theme.of(context).textTheme.headlineLarge,
         ),
       ),
     );

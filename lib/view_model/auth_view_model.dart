@@ -20,10 +20,12 @@ class AuthViewModel with ChangeNotifier {
       setLoading(false);
       debugPrint("Value: ${value['token']}");
       if (value['token'] != '') {
+        // UserViewModel().saveUser(userModelFromJson(value));
         SharedPreferences sp = await SharedPreferences.getInstance();
         sp.setString('token', value['token']);
 
         Utils.toastMessage('Login Successfull');
+        // ignore: use_build_context_synchronously
         Navigator.pushReplacementNamed(context, RoutesName.home);
         notifyListeners();
       } else {
