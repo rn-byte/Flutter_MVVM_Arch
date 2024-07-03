@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mvvm/model/user_model.dart';
 import 'package:flutter_mvvm/repository/auth_repository.dart';
 import 'package:flutter_mvvm/utils/routes/routes_name.dart';
 import 'package:flutter_mvvm/utils/utils.dart';
+import 'package:flutter_mvvm/view_model/user_view_model.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthViewModel with ChangeNotifier {
@@ -20,9 +23,10 @@ class AuthViewModel with ChangeNotifier {
       setLoading(false);
       debugPrint("Value: ${value['token']}");
       if (value['token'] != '') {
-        // UserViewModel().saveUser(userModelFromJson(value));
-        SharedPreferences sp = await SharedPreferences.getInstance();
-        sp.setString('token', value['token']);
+        final userPref = Provider.of<UserViewModel>(context, listen: false);
+        userPref.saveUser(UserModel(
+          token: value['token'].toString(),
+        ));
 
         Utils.toastMessage('Login Successfull');
         // ignore: use_build_context_synchronously
