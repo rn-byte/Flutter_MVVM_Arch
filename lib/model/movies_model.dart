@@ -28,14 +28,14 @@ class Movies {
   List<String>? genres;
   List<int>? ratings;
   String? poster;
-  dynamic? contentRating;
+  dynamic contentRating;
   String? duration;
   String? releaseDate;
-  dynamic? averageRating;
+  dynamic averageRating;
   String? originalTitle;
   String? storyline;
   List<String>? actors;
-  dynamic? imdbRating;
+  dynamic imdbRating;
   String? posterurl;
 
   Movies(
